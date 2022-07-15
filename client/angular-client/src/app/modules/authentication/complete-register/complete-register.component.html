@@ -1,0 +1,53 @@
+<app-centered-container>
+  <section>
+    <app-form-header title="Complete Register."></app-form-header>
+  </section>
+  <section>
+    <div class="mat-body gray-2">
+      Just pick-up a username and add a passwor to start.
+    </div>
+  </section>
+  <form [formGroup]="completeRegisterForm" (ngSubmit)="onSubmit()">
+    <section>
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-label>username</mat-label>
+        <mat-icon matPrefix>person</mat-icon>
+        <input type="text" matInput required formControlName="username">
+        <mat-error *ngIf="username && username.invalid">{{getUsernameErrorMessage()}}</mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-label>password</mat-label>
+        <mat-icon matPrefix>lock</mat-icon>
+        <input matInput [type]="hidePassword ? 'password' : 'text'" required formControlName="password">
+        <mat-error *ngIf="password && password.invalid">{{getPasswordErrorMessage()}}</mat-error>
+        <button type="button" mat-icon-button matSuffix (click)="hidePassword = !hidePassword"
+          [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePassword">
+          <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+      </mat-form-field>
+
+      <div class="d-flex justify-content-between">
+        <div class="d-flex align-items-center">
+          <mat-checkbox color="primary">It's okay to send me email with <strong>Jala</strong> tips, news,
+            and offers.</mat-checkbox>
+        </div>
+      </div>
+    </section>
+    <section>
+      <button mat-raised-button color="primary" class="w-100" [disabled]="!completeRegisterForm.valid">Done</button>
+    </section>
+  </form>
+  <section>
+    <mat-divider></mat-divider>
+  </section>
+  <section>
+    <div class="text-center">
+      <span class="gray-2">By continuing, you're agreeing to our </span>
+      <a>Customer Terms of Service</a>
+      ,&nbsp;
+      <a>Privacy Policy</a>
+      <span class="gray-2"> and </span>
+      <a>Cookie Policy</a>
+    </div>
+  </section>
+</app-centered-container>

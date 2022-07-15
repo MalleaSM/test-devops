@@ -1,0 +1,29 @@
+<mat-toolbar class="position-fixed">
+    <div class="w-100 text-center">
+        <span class="mat-h1">Welcome</span>
+    </div>
+</mat-toolbar>
+<div class="w-100 d-flex align-items-center justify-content-center height-100vh">
+    <div class="d-flex align-items-center justify-content-center flex-direction-colunm">
+        <section>
+            <h2 class="mat-display-2 gray-1 mb-0">Sign in to the app </h2>
+        </section>
+        <section>
+            <button mat-raised-button routerLink="/authentication/signin">
+                <mat-icon>login</mat-icon>
+                Sign In
+            </button>
+        </section>
+        <mat-divider class="w-100 mt-2 mb-2"></mat-divider>
+        <section>
+            <h2 class="mat-display-2 gray-1 mb-0">Or register a new account</h2>
+        </section>
+        <section>
+            <button mat-raised-button color="primary" routerLink="/authentication/signup">
+                <mat-icon>favorite</mat-icon>
+                Register
+            </button>
+        </section>
+
+    </div>
+</div>

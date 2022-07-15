@@ -1,0 +1,10 @@
+<div [@notificationState]="stateName" class="container w-100">
+    <div class="d-flex justify-content-between">
+        <div class="title d-flex align-items-center">
+            <strong>{{title}}</strong>
+        </div>
+        <button mat-icon-button aria-label="Close notification" (click)="hideNotification()">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+</div>

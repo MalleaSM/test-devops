@@ -1,0 +1,31 @@
+<div mat-dialog-title class="dialog-header">
+    {{dialogData.title}}
+</div>
+<div mat-dialog-content>
+    <!-- Here goes he form to create a new contact -->
+    <form [formGroup]="contactForm">  
+      <section>
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>Contact Name</mat-label>
+          <mat-icon matPrefix>person</mat-icon>
+          <input type="text" matInput required formControlName="contactName">
+          <mat-error *ngIf="contactName && contactName.invalid">{{getUsernameErrorMessage()}}</mat-error>
+        </mat-form-field>
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>email</mat-label>
+            <mat-icon matPrefix>email</mat-icon>
+            <input type="text" matInput email required formControlName="email" autofocus>
+            <mat-error *ngIf="email && email.invalid">{{getEmailErrorMessage()}}</mat-error>
+            <mat-error *ngIf="!saveContactButton">El correo ya existe</mat-error>
+          </mat-form-field>
+        </section>
+        <section>
+          <button type="submit" mat-raised-button color="primary" class="w-100"
+            (click)="checkEmailExists()" [disabled]="contactForm.invalid">Confirm</button>
+        </section>
+    </form>
+</div>
+<div mat-dialog-actions [align]="'end'">
+    <button mat-button (click)="onNoClick()">Cancel</button>
+    <button mat-raised-button type="button" color="primary"  [disabled]="saveContactButton" (click)="onSubmit()">{{dialogData.yesButton}}</button>
+</div>

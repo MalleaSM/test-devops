@@ -1,0 +1,34 @@
+<app-centered-container>
+  <section>
+    <app-form-header title="First, enter your email."></app-form-header>
+  </section>
+
+  <section>
+    <div class="mat-body gray-2">
+      Just one more mail - a quick confirmation - before you say goodbye to overstuffed inboxes for good.
+    </div>
+  </section>
+  <form [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
+    <section>
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-label>email</mat-label>
+        <mat-icon matPrefix>email</mat-icon>
+        <input type="text" matInput required formControlName="username" autofocus>
+        <mat-error *ngIf="username && username.invalid">{{getEmailErrorMessage()}}</mat-error>
+      </mat-form-field>
+    </section>
+    <section>
+      <button type="submit" mat-raised-button color="primary" class="w-100"
+        [disabled]="!signUpForm.valid">Confirm</button>
+    </section>
+  </form>
+  <section>
+    <mat-divider></mat-divider>
+  </section>
+  <section>
+    <div class="text-center">
+      <span class="gray-2">Already have an account? </span>
+      <a mat-button routerLink="/authentication/signin">Sign in</a>
+    </div>
+  </section>
+</app-centered-container>

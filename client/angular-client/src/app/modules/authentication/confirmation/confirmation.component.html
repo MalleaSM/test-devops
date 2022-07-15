@@ -1,0 +1,29 @@
+<app-centered-container>
+  <section>
+    <app-form-header title="Check your email!"></app-form-header>
+  </section>
+
+  <section>
+    <div class="mat-body gray-2">
+      We've sent a {{codeLength}}-digit confirmation code your email .It will expire shortly. So enter it soon.
+    </div>
+  </section>
+  <section>
+    <code-input [codeLength]="codeLength" [isCharsCode]="true" (codeChanged)="onCodeChanged($event)"
+      (codeCompleted)="onCodeCompleted($event)">
+    </code-input>
+  </section>
+  <section>
+    <mat-divider></mat-divider>
+  </section>
+  <section>
+    <div class="d-flex justify-content-center align-items-center">
+      <span class="gray-2">Didn't receive a code? </span>
+      <button mat-button color="primary">Try again</button>
+    </div>
+  </section>
+  <div class="position-relative">
+    <app-form-notification [title]="errorMessage" [show]="showNotification" (updateShow)="showNotification=$event">
+    </app-form-notification>
+  </div>
+</app-centered-container>

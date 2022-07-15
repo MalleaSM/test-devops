@@ -1,0 +1,10 @@
+.container {
+    position: absolute;
+    padding: .5rem;
+    background-color: #F44336;
+    color: white;
+}
+
+.title {
+    padding: .5rem;
+}
