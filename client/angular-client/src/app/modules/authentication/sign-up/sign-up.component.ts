@@ -54,8 +54,10 @@ export class SignUpComponent {
    */
   onSubmit(): void {
     // Complete the integration with service here
-    console.warn('Sign Up form data', this.signUpForm.value);
-    this.router.navigate(['/authentication/confirmation']);
+    this.localStorageService.setItem("email",this.signUpForm.value.username);
+    this.authService.saveUser(this.signUpForm.value.username).subscribe(userData =>{
+      this.router.navigate(['/authentication/confirmation']);
+    })
   }
 
 }
