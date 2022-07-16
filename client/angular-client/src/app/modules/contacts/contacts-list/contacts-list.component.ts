@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ContactsService } from '@services/contacts/contacts.service';
-
 import { AddContactDialogComponent } from '@contacts/add-contact-dialog/add-contact-dialog.component';
 import IMenu from '@shared/models/menu.model';
 import IContact from '@shared/models/contact.model';
 import { LocalStorageService } from '@services/local-storage/local-storage.service';
+import { Router } from '@angular/router';
 
 /**
  * Component for handle the Contact List Page
@@ -33,12 +33,14 @@ export class ContactsListComponent implements OnInit {
     public dialog: MatDialog,
     private contactsService: ContactsService,
     private localStorageService: LocalStorageService,
+    private router: Router,
   ) {
     this.menus = [
       {
         id: '1',
         title: 'Contacts',
-        navigate: '/contacts/list',
+        navigateList: '/contacts/list',
+        navigateSent: '/contacts/sent',
         icon: 'list'
       }
     ];
@@ -49,19 +51,26 @@ export class ContactsListComponent implements OnInit {
    * On Init the component
    */
   ngOnInit(): void {
-    this.loadContacts();
+    this.isLogged();
   }
 
+  isLogged(){
+     if(!this.localStorageService.getItem("userLogged")){
+      console.log("not logged in");
+      this.router.navigate(['/']);
+    }
+    else{
+      this.loadContacts();
+    }
+  }
   /**
    * load the contacts data from service
    */
   loadContacts(): void {
     const userId = parseInt(this.localStorageService.getItem("userId"));
-
     this.contactsService.getContacts(userId).subscribe( (contactsData:any) =>{
       this.contacts = contactsData.contacts;
-      console.log(this.contacts);
-      });
+    });
   }
 
   /**
@@ -75,8 +84,6 @@ export class ContactsListComponent implements OnInit {
         yesButton: 'Add Contact'
       }
     });
-    // Complete here the add contact feature
-
   }
 
 }

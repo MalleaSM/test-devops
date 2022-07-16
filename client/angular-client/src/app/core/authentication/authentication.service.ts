@@ -68,7 +68,7 @@ export class AuthenticationService {
    * @returns {Observable}
    */
   signIn(user: IUser): Observable<any> {
-    return this.http.get<any>(`${API_SERVICE_URL}/authentication?username=${user.username}&password=${user.password}`);
+    return this.http.post<any>(`${API_SERVICE_URL}/authentication/login`, user);
   }
 
   /**
@@ -82,8 +82,8 @@ export class AuthenticationService {
   /**
    * Logout a user
    */
-  logout(): void {
-    this.localStorageService.clear();
+  logout(token: string ):  Observable<any>  {
+    return this.http.get<string>(`${API_SERVICE_URL}/authentication/logout/${token}`);
   }
 
 }

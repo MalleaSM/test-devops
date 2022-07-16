@@ -3,7 +3,6 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '@authenticationService/authentication.service';
 import { LocalStorageService } from '@services/local-storage/local-storage.service';
-
 import { passwordMinLength, usernameMinLength, userLoggedAttr } from '@env';
 
 /**
@@ -111,16 +110,14 @@ export class CompleteRegisterComponent {
       password: this.completeRegisterForm.value.password,
       email: this.localStorageService.getItem("email")
     }
-
     console.log(completeForm);
     this.authService.createUser(completeForm).subscribe((userData:any)=>{
+      this.localStorageService.setItem("token",userData.temporalCode);
       this.localStorageService.setItem("userId",userData.id);
       this.localStorageService.setItem(userLoggedAttr, true);
       this.localStorageService.removeItem("email");
       this.router.navigate(['/contacts/list']);
     })
-    // this.localStorageService.setItem(userLoggedAttr, true);
-    // this.router.navigate(['/contacts/list']);
   }
 
 }

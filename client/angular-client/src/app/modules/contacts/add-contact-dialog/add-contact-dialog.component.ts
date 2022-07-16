@@ -1,7 +1,6 @@
 import { Component, Inject } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder,FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { usernameMinLength } from '@env';
 import { ContactsService } from '@services/contacts/contacts.service';
 import { LocalStorageService } from '@services/local-storage/local-storage.service';
 import IDialogData from '@shared/models/dialog-data.model';
@@ -71,12 +70,12 @@ export class AddContactDialogComponent {
     this.contactsService.getContactByEmail(this.contactForm.value.email,parseInt(this.localStorageService.getItem("userId"))).subscribe((contactExists:any)=>{
       console.log(contactExists.response);
      if(!contactExists.response){
-      console.log("no existe");
+      console.log("email available");
       this.emailExistsMessage = false;
       this.saveContactButton = false;
      }
      else{
-      console.log("existe");
+      console.log("email already in database");
        this.emailExistsMessage = true;
        this.saveContactButton = true;
      }
@@ -104,6 +103,4 @@ export class AddContactDialogComponent {
     this.dialogRef.close();
     window.location.reload();
   }
-
-  
 }

@@ -100,6 +100,8 @@ export class SignInComponent {
     this.authService.signIn(this.signInForm.value)
       .subscribe(
         response => {
+          console.log(response);
+          this.localStorageService.setItem('token',response.temporalCode);
           this.localStorageService.setItem(userLoggedAttr, true);
           this.localStorageService.setItem('userId', response.response);
           this.router.navigate(['/contacts/list']);
@@ -111,5 +113,4 @@ export class SignInComponent {
         }
       );
   }
-
 }
