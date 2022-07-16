@@ -10,6 +10,12 @@
   <form [formGroup]="completeRegisterForm" (ngSubmit)="onSubmit()">
     <section>
       <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Full Name</mat-label>
+        <mat-icon matPrefix>person</mat-icon>
+        <input type="text" matInput required formControlName="fullName">
+        <mat-error *ngIf="username && username.invalid">{{getFullNameErrorMessage()}}</mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="w-100">
         <mat-label>username</mat-label>
         <mat-icon matPrefix>person</mat-icon>
         <input type="text" matInput required formControlName="username">

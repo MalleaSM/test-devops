@@ -17,7 +17,6 @@ import { passwordMinLength, usernameMinLength, userLoggedAttr } from '@env';
 export class CompleteRegisterComponent {
 
   // Attributes
-
   /**
    * Attribute to store the password field input visibility
    */
@@ -40,12 +39,25 @@ export class CompleteRegisterComponent {
    */
   get password() { return this.completeRegisterForm.get('password'); }
 
+  /**
+   * getter for fullName form control
+   * @returns {AbstractControl | null }
+   */
+  get fullName() {return this.completeRegisterForm.get('fullName'); }
+
+   /**
+   * getter for email form control
+   * @returns {AbstractControl | null }
+   */
+  get email() {return this.completeRegisterForm.get('fullName'); }
+
   constructor(
-    private authService: AuthenticationService,
+    private authService: AuthenticationService, 
     private localStorageService: LocalStorageService,
     private router: Router
   ) {
     this.completeRegisterForm = new FormGroup({
+      fullName: new FormControl('',[Validators.required]),
       username: new FormControl('', [Validators.required, Validators.minLength(usernameMinLength)]),
       password: new FormControl('', [Validators.required, Validators.minLength(passwordMinLength)]),
     });
@@ -61,13 +73,11 @@ export class CompleteRegisterComponent {
     if (this.username == null) {
       return '';
     }
-
     if (this.username.hasError('required')) {
       return 'You must enter a username';
     }
     return this.username.hasError('minlength') ? 'username has contain at least ' + usernameMinLength + ' characters' : '';
   }
-
   /**
    * Get the password form control error message
    * @returns {string}
@@ -83,13 +93,34 @@ export class CompleteRegisterComponent {
     return this.password.hasError('minlength') ? 'password has contain at least ' + passwordMinLength + ' characters' : '';
   }
 
+  getFullNameErrorMessage() {
+    if (this.username == null) {
+      return '';
+    }
+      return 'You must enter your Full Name';
+  }
+
   /**
    * Submit the form data
    */
   onSubmit(): void {
     // Complete the integration with backend here
-    this.localStorageService.setItem(userLoggedAttr, true);
-    this.router.navigate(['/contacts/list']);
+    const completeForm = {
+      fullName: this.completeRegisterForm.value.fullName,
+      username: this.completeRegisterForm.value.username,
+      password: this.completeRegisterForm.value.password,
+      email: this.localStorageService.getItem("email")
+    }
+
+    console.log(completeForm);
+    this.authService.createUser(completeForm).subscribe((userData:any)=>{
+      this.localStorageService.setItem("userId",userData.id);
+      this.localStorageService.setItem(userLoggedAttr, true);
+      this.localStorageService.removeItem("email");
+      this.router.navigate(['/contacts/list']);
+    })
+    // this.localStorageService.setItem(userLoggedAttr, true);
+    // this.router.navigate(['/contacts/list']);
   }
 
 }
