@@ -14,7 +14,7 @@ import { LocalStorageService } from '@services/local-storage/local-storage.servi
 export class ConfirmationComponent {
 
   // Attributes
-
+  codeMatch = false;
   /**
    * Attribute to store the notification component visibility
    */
@@ -49,7 +49,12 @@ export class ConfirmationComponent {
    * called only if user entered full code
   */
   onCodeCompleted(code: string) {
-    this.router.navigate(['/authentication/complete-register']);
+    this.authenticationService.confirmUserCode(code).subscribe( temporalCode =>{
+      this.codeMatch = false
+      this.router.navigate(['/authentication/complete-register']);
+    }, error => {
+      this.codeMatch = true;
+    })
+   // this.router.navigate(['/authentication/complete-register']);
   }
-
 }

@@ -12,6 +12,7 @@
     <code-input [codeLength]="codeLength" [isCharsCode]="true" (codeChanged)="onCodeChanged($event)"
       (codeCompleted)="onCodeCompleted($event)">
     </code-input>
+    <mat-error *ngIf="codeMatch"> Incorrect Code</mat-error>
   </section>
   <section>
     <mat-divider></mat-divider>
