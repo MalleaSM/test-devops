@@ -5,6 +5,7 @@ import { ContactsService } from '@services/contacts/contacts.service';
 import { AddContactDialogComponent } from '@contacts/add-contact-dialog/add-contact-dialog.component';
 import IMenu from '@shared/models/menu.model';
 import IContact from '@shared/models/contact.model';
+import { LocalStorageService } from '@services/local-storage/local-storage.service';
 
 /**
  * Component for handle the Contact List Page
@@ -31,6 +32,7 @@ export class ContactsListComponent implements OnInit {
   constructor(
     public dialog: MatDialog,
     private contactsService: ContactsService,
+    private localStorageService: LocalStorageService,
   ) {
     this.menus = [
       {
@@ -54,6 +56,12 @@ export class ContactsListComponent implements OnInit {
    * load the contacts data from service
    */
   loadContacts(): void {
+    const userId = parseInt(this.localStorageService.getItem("userId"));
+
+    this.contactsService.getContacts(userId).subscribe( (contactsData:any) =>{
+      this.contacts = contactsData.contacts;
+      console.log(this.contacts);
+      });
   }
 
   /**
