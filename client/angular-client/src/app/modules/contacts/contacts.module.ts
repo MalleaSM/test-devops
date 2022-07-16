@@ -13,6 +13,8 @@ import { ContactsRoutingModule } from './contacts-routing.module';
 import { ContactsListComponent } from './contacts-list/contacts-list.component';
 import { ContactsTableComponent } from './contacts-table/contacts-table.component';
 import { AddContactDialogComponent } from './add-contact-dialog/add-contact-dialog.component';
+import { SendMessageComponent } from './send-message/send-message.component';
+import { ContactsMessageSendedComponent } from './contacts-message-sended/contacts-message-sended.component';
 
 
 /**
@@ -22,7 +24,9 @@ import { AddContactDialogComponent } from './add-contact-dialog/add-contact-dial
   declarations: [
     ContactsListComponent,
     ContactsTableComponent,
-    AddContactDialogComponent
+    AddContactDialogComponent,
+    SendMessageComponent,
+    ContactsMessageSendedComponent
   ],
   imports: [
     CommonModule,

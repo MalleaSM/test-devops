@@ -6,7 +6,8 @@ type IMenu = {
     id?: string;
     title: string;
     icon?: string;
-    navigate: string
+    navigateList: string;
+    navigateSent: string;
 }
 
 export default IMenu;

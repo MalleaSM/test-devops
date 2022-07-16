@@ -1,4 +1,7 @@
 import { Component, Input } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { SendMessageComponent } from '@contacts/send-message/send-message.component';
+import { LocalStorageService } from '@services/local-storage/local-storage.service';
 import IContact from '@shared/models/contact.model';
 
 /**
@@ -26,10 +29,13 @@ export class ContactsTableComponent {
 
   displayedColumns: string[];
 
-  constructor() {
+  constructor(
+    public dialog: MatDialog,
+    private localStorageService: LocalStorageService,
+  ) {
     this.dataSource = [];
     this.tableDataSource = [];
-    this.displayedColumns = ['userId', 'name', 'email'];
+    this.displayedColumns = ['userId', 'name', 'email','action'];
   }
 
   /**
@@ -48,6 +54,13 @@ export class ContactsTableComponent {
       return 0
     });
   }
+  public messageDialog(id: number): void {
+    const dialogRef = this.dialog.open(SendMessageComponent, {
+      width: '500px',
+    });
+    console.log(id);
+    this.localStorageService.setItem("contactId",id);
+  }
 
   /**
    * Perform the filter for the data source
@@ -56,5 +69,4 @@ export class ContactsTableComponent {
   applyFilter(filterValue: string) {
     this.tableDataSource = this.dataSource.filter(c => c.name.indexOf(filterValue) != -1 || c.email.indexOf(filterValue) != -1);
   }
-
 }

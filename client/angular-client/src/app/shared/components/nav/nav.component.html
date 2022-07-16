@@ -3,7 +3,8 @@
     [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="(isHandset$ | async) === false">
     <mat-toolbar>Menu</mat-toolbar>
     <mat-nav-list>
-      <a mat-list-item *ngFor="let menu of menus; index as i;" [href]="menu.navigate">{{menu.title}}</a>
+      <a mat-list-item *ngFor="let menu of menus; index as i;" [href]="menu.navigateList">{{menu.title}}</a>
+      <a mat-list-item *ngFor="let menu of menus; index as i;" [href]="menu.navigateSent">Sended</a>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>

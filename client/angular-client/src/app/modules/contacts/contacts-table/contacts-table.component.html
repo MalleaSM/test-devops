@@ -19,6 +19,14 @@
             <td mat-cell *matCellDef="let element"> {{element.email}} </td>
         </ng-container>
 
+        <!-- Action -->
+        <ng-container matColumnDef="action">
+            <th mat-header-cell *matHeaderCellDef> Action  </th>
+            <td mat-cell tooltip="Send Email" *matCellDef="let element"><a (click)="messageDialog(element.id)" class="material-icons">
+                mail
+            </a> </td>
+        </ng-container>
+
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>

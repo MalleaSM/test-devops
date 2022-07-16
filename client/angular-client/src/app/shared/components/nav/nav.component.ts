@@ -5,6 +5,7 @@ import { map, shareReplay } from 'rxjs/operators';
 import IMenu from '@shared/models/menu.model';
 import { AuthenticationService } from '@authenticationService/authentication.service';
 import { Router } from '@angular/router';
+import { LocalStorageService } from '@services/local-storage/local-storage.service';
 
 /**
  * Component for application navigation
@@ -41,7 +42,8 @@ export class NavComponent {
   constructor(
     private breakpointObserver: BreakpointObserver,
     private router: Router,
-    private authenticationService: AuthenticationService
+    private authenticationService: AuthenticationService,
+    private localStorageService: LocalStorageService
   ) {
     this.title = '';
     this.menus = [];
@@ -53,7 +55,8 @@ export class NavComponent {
    * Logout from the application
    */
   onLogout(): void {
-    this.authenticationService.logout();
+    this.authenticationService.logout(this.localStorageService.getItem("token"));
+    this.localStorageService.clear();
     this.router.navigate(['/']);
   }
 
