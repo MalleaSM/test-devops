@@ -101,7 +101,7 @@ export class SignInComponent {
       .subscribe(
         response => {
           this.localStorageService.setItem(userLoggedAttr, true);
-          this.localStorageService.setItem('user', response);
+          this.localStorageService.setItem('userId', response.response);
           this.router.navigate(['/contacts/list']);
         },
         err => {
