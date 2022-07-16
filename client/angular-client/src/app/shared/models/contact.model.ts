@@ -4,7 +4,7 @@
 
 type IContact = {
     id?: string;
-    userId: string;
+    userId: number;
     name: string;
     email: string;
 }

@@ -6,7 +6,7 @@ export const environment = {
   production: false
 };
 
-export const API_SERVICE_URL = 'http://localhost:8080';
+export const API_SERVICE_URL = 'https://contacts-app02.herokuapp.com';
 
 // Min length for password
 export const passwordMinLength = 4;
