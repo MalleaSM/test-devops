@@ -102,15 +102,8 @@ export class AddContactDialogComponent {
     }
     this.contactsService.saveContact(contact).subscribe( register=>({}));
     this.dialogRef.close();
-    this.loadContacts();
+    window.location.reload();
   }
 
-  loadContacts(): void {
-    const userId = parseInt(this.localStorageService.getItem("userId"));
-    this.contactsService.getContacts(userId).subscribe( (contactsData:any) =>{
-      this.contacts = contactsData.contacts;
-      console.log(this.contacts);
-      });
-  }
-
+  
 }
