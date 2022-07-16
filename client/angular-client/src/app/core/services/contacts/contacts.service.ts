@@ -23,15 +23,15 @@ export class ContactsService {
    * @returns {Observable}
    */
   saveContact(contact: IContact): Observable<IContact> {
-    return this.http.post<IContact>(`${API_SERVICE_URL}/contacts`, contact);
+    return this.http.post<IContact>(`${API_SERVICE_URL}/contact`, contact);
   }
 
   /**
    * Retrieve all the contacts
    * @returns {Observable}
    */
-  getContacts(): Observable<Array<IContact>> {
-    return this.http.get<Array<IContact>>(`${API_SERVICE_URL}/contacts/`);
+  getContacts(userId:number): Observable<Array<IContact>> {
+    return this.http.get<Array<IContact>>(`${API_SERVICE_URL}/users/${userId}`);
   }
 
   /**
@@ -41,6 +41,10 @@ export class ContactsService {
    */
   getContactById(contactId: string): Observable<IContact> {
     return this.http.get<IContact>(`${API_SERVICE_URL}/contacts/${contactId}`);
+  }
+
+  getContactByEmail(contactEmail: string, id:number){
+    return this.http.get<IContact>(`${API_SERVICE_URL}/contact/${id}/exists/${contactEmail}`)
   }
 
 }

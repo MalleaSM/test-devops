@@ -3,7 +3,9 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { usernameMinLength } from '@env';
 import { ContactsService } from '@services/contacts/contacts.service';
+import { LocalStorageService } from '@services/local-storage/local-storage.service';
 import IDialogData from '@shared/models/dialog-data.model';
+import IContact from '@shared/models/contact.model';
 
 /**
  * Component for handle add contact form
@@ -18,10 +20,15 @@ export class AddContactDialogComponent {
   // Attributes
   contactForm: FormGroup;
   saveContactButton = true;
-    
+  emailExistsMessage: any =  null;
+
+  contacts: Array<IContact>;
+
   constructor(
     private dialogRef: MatDialogRef<AddContactDialogComponent>,
     private contactsService: ContactsService,
+    private localStorageService: LocalStorageService,
+
 
     @Inject(MAT_DIALOG_DATA)
     public dialogData: IDialogData,
@@ -32,6 +39,7 @@ export class AddContactDialogComponent {
       email: ['',Validators.required],
       contactName: ['', Validators.required]
     })
+    this.contacts = [];
   }
 
   // Methods
@@ -60,18 +68,19 @@ export class AddContactDialogComponent {
     return '';
   }
   checkEmailExists(){
-    console.log("Verificar con el backend")
-    // this.contactsService.getContacts().subscribe((contactsSData:any) =>{
-    //   console.log(contactsSData);
-    //   contactsSData.forEach((element:any) => {
-    //     if(element.email == this.contactForm.value.email){
-    //       this.saveContactButton = false;
-    //     }
-    //     else{
-    //       this.saveContactButton = true;
-    //     }
-    //   });
-    // })
+    this.contactsService.getContactByEmail(this.contactForm.value.email,parseInt(this.localStorageService.getItem("userId"))).subscribe((contactExists:any)=>{
+      console.log(contactExists.response);
+     if(!contactExists.response){
+      console.log("no existe");
+      this.emailExistsMessage = false;
+      this.saveContactButton = false;
+     }
+     else{
+      console.log("existe");
+       this.emailExistsMessage = true;
+       this.saveContactButton = true;
+     }
+    })
   }
 
   /**
@@ -86,9 +95,22 @@ export class AddContactDialogComponent {
    */
   onSubmit(): void {
     // Complete here the add contact feature
-    console.log(this.contactForm.value);
-    // this.contactsService.saveContact(this.contactForm.value).subscribe( x=>({
-    // }))
+    const contact = {
+      userId: parseInt(this.localStorageService.getItem("userId")),
+      name:this.contactForm.value.contactName,
+      email:this.contactForm.value.email,
+    }
+    this.contactsService.saveContact(contact).subscribe( register=>({}));
+    this.dialogRef.close();
+    this.loadContacts();
+  }
+
+  loadContacts(): void {
+    const userId = parseInt(this.localStorageService.getItem("userId"));
+    this.contactsService.getContacts(userId).subscribe( (contactsData:any) =>{
+      this.contacts = contactsData.contacts;
+      console.log(this.contacts);
+      });
   }
 
 }
