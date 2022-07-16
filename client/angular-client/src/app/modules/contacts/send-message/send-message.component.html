@@ -1,0 +1,17 @@
+<div mat-dialog-title class="dialog-header">
+    Message
+</div>
+<div mat-dialog-content>
+    <!-- Here goes he form to create a new contact -->
+    <form [formGroup]="messageForm">  
+        <section>
+            <mat-form-field appearance="fill"  class="w-100" >
+                <textarea matInput formControlName="message"></textarea>
+              </mat-form-field>
+          </section>
+      </form>  
+</div>
+<div mat-dialog-actions [align]="'end'">
+    <button mat-button (click)="onNoClick()">Cancel</button>
+    <button mat-raised-button type="button" color="primary" (click)="onSubmit()">Send</button>
+</div>
