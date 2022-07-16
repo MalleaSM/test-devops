@@ -31,10 +31,19 @@ export class AuthenticationService {
    * @param {IUser} user - User information
    * @returns {Observable}
    */
-  saveUser(user: IUser): Observable<any> {
-    return this.http.post<any>(`${API_SERVICE_URL}/users/`, user, httpOptionsText);
+  saveUser(user: any): Observable<any> {
+    return this.http.get<any>(`${API_SERVICE_URL}/registration/code/${user}`);
   }
 
+    /**
+   * Update the user
+   * @param {IUser} user - User information
+   * @returns {Observable}
+   */
+     createUser(user: IUser): Observable<IUser> {
+      return this.http.post<IUser>(`${API_SERVICE_URL}/users/`, user);
+    }
+  
   /**
    * Update the user
    * @param {IUser} user - User information
@@ -50,7 +59,7 @@ export class AuthenticationService {
    * @returns {Observable}
    */
   confirmUserCode(code: string): Observable<string> {
-    return this.http.get<string>(`${API_SERVICE_URL}/users/${code}`);
+    return this.http.get<string>(`${API_SERVICE_URL}/registration/${code}`);
   }
 
   /**
@@ -59,7 +68,7 @@ export class AuthenticationService {
    * @returns {Observable}
    */
   signIn(user: IUser): Observable<any> {
-    return this.http.post<any>(`${API_SERVICE_URL}/sign-in`, user);
+    return this.http.get<any>(`${API_SERVICE_URL}/authentication?username=${user.username}&password=${user.password}`);
   }
 
   /**
